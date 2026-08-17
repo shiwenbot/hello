@@ -35,6 +35,8 @@ const els = {
   revealClose: document.querySelector('#revealClose'),
   letter: document.querySelector('#letterOverlay'),
   letterClose: document.querySelector('#letterClose'),
+  music: document.querySelector('#backgroundMusic'),
+  musicButton: document.querySelector('#musicButton'),
   menuButton: document.querySelector('#menuButton'),
   menu: document.querySelector('#menuPopover'),
   openLetter: document.querySelector('#openLetter'),
@@ -50,6 +52,34 @@ let state = loadState()
 let activeCard = null
 let revealTimer = null
 let revealFrame = null
+let musicPausedByUser = false
+
+function syncMusicButton() {
+  const isPlaying = !els.music.paused
+  els.musicButton.classList.toggle('is-playing', isPlaying)
+  els.musicButton.setAttribute('aria-pressed', String(isPlaying))
+  els.musicButton.setAttribute('aria-label', isPlaying ? '暂停背景音乐' : '播放背景音乐')
+  els.musicButton.title = isPlaying ? '暂停音乐' : '播放音乐'
+}
+
+async function playMusic() {
+  if (musicPausedByUser) return false
+  try {
+    await els.music.play()
+    return true
+  } catch {
+    return false
+  }
+}
+
+function unlockMusic(event) {
+  if (els.musicButton.contains(event.target) || musicPausedByUser) return
+  playMusic().then((started) => {
+    if (!started) return
+    document.removeEventListener('pointerdown', unlockMusic, true)
+    document.removeEventListener('keydown', unlockMusic, true)
+  })
+}
 
 function loadState() {
   try {
@@ -257,6 +287,20 @@ function resetCollection() {
 els.collect.addEventListener('click', closeReveal)
 els.revealClose.addEventListener('click', closeReveal)
 els.letterClose.addEventListener('click', closeLetter)
+els.music.volume = 0.55
+els.music.addEventListener('play', syncMusicButton)
+els.music.addEventListener('pause', syncMusicButton)
+els.musicButton.addEventListener('click', () => {
+  if (els.music.paused) {
+    musicPausedByUser = false
+    playMusic()
+  } else {
+    musicPausedByUser = true
+    els.music.pause()
+  }
+})
+document.addEventListener('pointerdown', unlockMusic, true)
+document.addEventListener('keydown', unlockMusic, true)
 els.openLetter.addEventListener('click', () => { els.menu.hidden = true; openLetter() })
 els.menuButton.addEventListener('click', (event) => {
   event.stopPropagation()
@@ -345,3 +389,5 @@ function initSunlight() {
 
 renderGrid()
 initSunlight()
+syncMusicButton()
+playMusic()

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
+    <audio id="backgroundMusic" src="%BASE_URL%music.mp3" autoplay loop preload="auto" playsinline></audio>
     <div id="sunlight" aria-hidden="true"></div>
     <main class="app-shell">
       <header class="topbar">
@@ -19,9 +20,14 @@
           <p class="edition">ZSIGA · QIXI 2026</p>
           <h1>日光收藏册</h1>
         </div>
-        <button class="icon-button" id="menuButton" type="button" aria-label="打开菜单" title="菜单">
-          <span></span><span></span><span></span>
-        </button>
+        <div class="topbar-actions">
+          <button class="icon-button music-button" id="musicButton" type="button" aria-label="播放背景音乐" aria-pressed="false" title="播放音乐">
+            <span class="music-note" aria-hidden="true">♪</span>
+          </button>
+          <button class="icon-button" id="menuButton" type="button" aria-label="打开菜单" title="菜单">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
       </header>
 
       <section class="collection" aria-labelledby="collectionTitle">
