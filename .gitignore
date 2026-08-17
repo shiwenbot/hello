@@ -2,3 +2,8 @@ node_modules/
 dist/
 output/
 tmp/
+
+# Tencent Cloud EdgeOne
+.env
+.edgeone/*
+.tef_dist/*
