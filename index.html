@@ -1,23 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Hello three.js</title>
-<style>
-  html, body { margin: 0; height: 100%; overflow: hidden; background: #101014; }
-  canvas { display: block; }
-  #hud {
-    position: fixed; left: 12px; bottom: 12px; z-index: 10;
-    font: 12px/1.7 ui-monospace, Consolas, Menlo, monospace;
-    color: #9fe8ff; background: rgba(0, 0, 0, .5);
-    padding: 8px 12px; border-radius: 10px;
-    pointer-events: none; white-space: pre;
-  }
-</style>
-</head>
-<body>
-<div id="hud">three.js booting…</div>
-<script type="module" src="/src/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f3efe3" />
+    <meta name="description" content="给你的一份日光礼物，收集十二款日光收藏。" />
+    <title>日光收藏册 · 七夕限定</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="sunlight" aria-hidden="true"></div>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="edition">ZSIGA · QIXI 2026</p>
+          <h1>日光收藏册</h1>
+        </div>
+        <button class="icon-button" id="menuButton" type="button" aria-label="打开菜单" title="菜单">
+          <span></span><span></span><span></span>
+        </button>
+      </header>
+
+      <section class="collection" aria-labelledby="collectionTitle">
+        <div class="collection-meta">
+          <div>
+            <p id="collectionTitle" class="eyebrow">给你的一份日光礼物</p>
+            <p class="hint" id="hint">选一张心动的卡，迎接今日份日光</p>
+          </div>
+          <div class="progress" aria-label="收集进度">
+            <strong id="progressCount">0</strong><span>/12</span>
+          </div>
+        </div>
+        <div class="progress-track" aria-hidden="true"><i id="progressBar"></i></div>
+        <div class="card-grid" id="cardGrid" aria-label="十二张日光收藏卡"></div>
+      </section>
+
+      <footer class="footer-note">
+        <span class="sun-mark" aria-hidden="true"></span>
+        <span id="footerMessage">未开启的卡片里，藏着不同的相遇</span>
+      </footer>
+    </main>
+
+    <div class="overlay reveal-overlay" id="revealOverlay" aria-hidden="true">
+      <button class="overlay-close" id="revealClose" type="button" aria-label="返回收藏册" title="返回" disabled>×</button>
+      <div class="reveal-stage" role="dialog" aria-modal="true" aria-labelledby="revealName">
+        <p class="reveal-kicker" id="revealKicker">日光正在显影</p>
+        <div class="reveal-card" id="revealCard">
+          <div class="reveal-card-inner">
+            <div class="reveal-back"><div class="back-sun"></div><span>Z</span></div>
+            <div class="reveal-front" id="revealFront"></div>
+          </div>
+          <div class="light-sweep"></div>
+        </div>
+        <div class="reveal-copy">
+          <p class="serial" id="revealSerial">SUNLIGHT 01 / 12</p>
+          <h2 id="revealName">日光收藏 01</h2>
+          <p id="revealLine">发现一束新的日光</p>
+          <button class="primary-button" id="collectButton" type="button" disabled>收入收藏册</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay letter-overlay" id="letterOverlay" aria-hidden="true">
+      <section class="letter" role="dialog" aria-modal="true" aria-labelledby="letterTitle">
+        <p class="letter-date">农历七月初七</p>
+        <div class="letter-seal" aria-hidden="true">夕</div>
+        <h2 id="letterTitle">七夕快乐</h2>
+        <p>十二束日光已经到齐。愿往后的每一次相见，都像今天一样，刚好有风，也刚好有你。</p>
+        <p class="signature">日光收藏册<br /><span>ZSIGA QIXI 2026</span></p>
+        <button class="primary-button" id="letterClose" type="button">查看完整收藏</button>
+      </section>
+    </div>
+
+    <div class="overlay confirm-overlay" id="confirmOverlay" aria-hidden="true">
+      <section class="confirm-sheet" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmCopy">
+        <div class="confirm-icon">↺</div>
+        <h2 id="confirmTitle">重新开始收藏？</h2>
+        <p id="confirmCopy">已开启的卡片和收集进度会被清空。</p>
+        <div class="confirm-actions">
+          <button class="secondary-button" id="cancelReset" type="button">保留收藏</button>
+          <button class="danger-button" id="confirmReset" type="button">重新开始</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="menu-popover" id="menuPopover" hidden>
+      <button id="openLetter" type="button" hidden>重读七夕信笺</button>
+      <button id="resetButton" type="button">重新开始</button>
+    </div>
+
+    <div class="sr-only" id="liveRegion" aria-live="polite"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
