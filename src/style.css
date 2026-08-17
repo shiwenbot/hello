@@ -140,6 +140,8 @@ h1 { margin: 0; font: 700 24px/1.15 "Noto Serif SC", serif; letter-spacing: 0; }
 .character-figure { --tone: #607052; --accent: #e2bf68; position: relative; width: 76%; aspect-ratio: .7; z-index: 1; filter: drop-shadow(0 12px 9px rgba(37,39,29,.18)); }
 .character-figure.compact { width: 82%; transform: translateY(-2%); }
 .character-figure > img { position: absolute; z-index: 10; inset: -2% -18%; width: 136%; height: 104%; object-fit: contain; }
+.character-figure.has-photo { width: 100%; height: 100%; aspect-ratio: auto; filter: none; transform: none; }
+.character-figure.has-photo > img { inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .figure-shadow { position: absolute; width: 68%; height: 8%; bottom: 4%; left: 16%; border-radius: 50%; background: rgba(41,44,33,.18); filter: blur(4px); }
 .figure-head { position: absolute; z-index: 3; width: 75%; height: 46%; left: 12.5%; top: 16%; border-radius: 47% 47% 44% 44%; background: linear-gradient(145deg, color-mix(in srgb, var(--tone) 76%, white), var(--tone)); box-shadow: inset -8px -8px 14px rgba(25,29,22,.12), inset 5px 5px 10px rgba(255,255,255,.16); }
 .figure-ears { position: absolute; z-index: 2; top: 8%; left: 11%; width: 78%; height: 28%; display: flex; justify-content: space-between; }

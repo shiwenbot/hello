@@ -2,7 +2,7 @@ import * as THREE from 'three'
 
 const STORAGE_KEY = 'zsiga-sunlight-collection-v1'
 const ASSET_BASE = import.meta.env.BASE_URL
-const characterImage = (number) => `${ASSET_BASE}assets/characters/sunlight-${String(number).padStart(2, '0')}.webp`
+const characterImage = (number) => `${ASSET_BASE}assets/characters/zsiga-${String(number).padStart(2, '0')}.jpg`
 
 const characters = [
   { id: 'moss', name: '日光收藏 01', image: characterImage(1), color: '#657455', accent: '#d5b861', line: '苔藓把清晨的秘密交给了你', accessory: 'leaf' },
@@ -76,8 +76,7 @@ function makeCharacter(item, compact = false) {
   figure.style.setProperty('--tone', item.color)
   figure.style.setProperty('--accent', item.accent)
   figure.dataset.accessory = item.accessory
-  figure.innerHTML = `
-    ${item.image ? `<img src="${item.image}" alt="" />` : ''}
+  const placeholderMarkup = `
     <div class="figure-shadow"></div>
     <div class="figure-ears"><i></i><i></i></div>
     <div class="figure-head">
@@ -88,8 +87,17 @@ function makeCharacter(item, compact = false) {
     </div>
     <div class="figure-body"><div class="figure-emblem"></div></div>
     <div class="figure-feet"><i></i><i></i></div>`
-  const img = figure.querySelector('img')
-  if (img) img.addEventListener('error', () => img.remove(), { once: true })
+  if (item.image) {
+    figure.classList.add('has-photo')
+    figure.innerHTML = `<img src="${item.image}" alt="" />`
+    const img = figure.querySelector('img')
+    img.addEventListener('error', () => {
+      figure.classList.remove('has-photo')
+      figure.innerHTML = placeholderMarkup
+    }, { once: true })
+    return figure
+  }
+  figure.innerHTML = placeholderMarkup
   return figure
 }
 
