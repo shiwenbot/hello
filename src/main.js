@@ -5,18 +5,18 @@ const ASSET_BASE = import.meta.env.BASE_URL
 const characterImage = (number) => `${ASSET_BASE}assets/characters/zsiga-${String(number).padStart(2, '0')}.jpg`
 
 const characters = [
-  { id: 'moss', name: '日光收藏 01', image: characterImage(1), color: '#657455', accent: '#d5b861', line: '苔藓把清晨的秘密交给了你', accessory: 'leaf' },
-  { id: 'berry', name: '日光收藏 02', image: characterImage(2), color: '#b84943', accent: '#f1c8a9', line: '甜甜的心事，今天也没有迟到', accessory: 'berry' },
-  { id: 'cloud', name: '日光收藏 03', image: characterImage(3), color: '#9ea8a0', accent: '#efe6cd', line: '云朵兜住了一小片温柔', accessory: 'cloud' },
-  { id: 'honey', name: '日光收藏 04', image: characterImage(4), color: '#d4a845', accent: '#6b5639', line: '把金色的好运分你一半', accessory: 'sun' },
-  { id: 'fern', name: '日光收藏 05', image: characterImage(5), color: '#415d4e', accent: '#b9c78f', line: '一片新叶，正朝着你生长', accessory: 'sprout' },
-  { id: 'rose', name: '日光收藏 06', image: characterImage(6), color: '#c76e72', accent: '#f2d7bf', line: '晚霞偷偷染红了脸颊', accessory: 'bow' },
-  { id: 'pond', name: '日光收藏 07', image: characterImage(7), color: '#5f8581', accent: '#e7cf88', line: '风吹过池塘，也吹来想念', accessory: 'drop' },
-  { id: 'acorn', name: '日光收藏 08', image: characterImage(8), color: '#796245', accent: '#d9a85d', line: '小小勇气，会长成一片森林', accessory: 'acorn' },
-  { id: 'starlight', name: '日光收藏 09', image: characterImage(9), color: '#687286', accent: '#f1d992', line: '今晚的星星只负责闪耀', accessory: 'star' },
-  { id: 'petal', name: '日光收藏 10', image: characterImage(10), color: '#d08d83', accent: '#f4e1cb', line: '花瓣记得每次温柔的靠近', accessory: 'flower' },
-  { id: 'meadow', name: '日光收藏 11', image: characterImage(11), color: '#8b9a69', accent: '#e4c66c', line: '走慢一点，日光正在等你', accessory: 'daisy' },
-  { id: 'moon', name: '日光收藏 12', image: characterImage(12), color: '#555b68', accent: '#e8d59d', line: '月光会替我，照亮你的归途', accessory: 'moon' },
+  { id: 'moss', name: '恶作剧', image: characterImage(1), color: '#657455', accent: '#d5b861', line: '苔藓把清晨的秘密交给了你', accessory: 'leaf' },
+  { id: 'berry', name: '出击', image: characterImage(2), color: '#b84943', accent: '#f1c8a9', line: '甜甜的心事，今天也没有迟到', accessory: 'berry' },
+  { id: 'cloud', name: '失衡', image: characterImage(3), color: '#9ea8a0', accent: '#efe6cd', line: '云朵兜住了一小片温柔', accessory: 'cloud' },
+  { id: 'honey', name: '答案', image: characterImage(4), color: '#d4a845', accent: '#6b5639', line: '把金色的好运分你一半', accessory: 'sun' },
+  { id: 'fern', name: '加速', image: characterImage(5), color: '#415d4e', accent: '#b9c78f', line: '一片新叶，正朝着你生长', accessory: 'sprout' },
+  { id: 'rose', name: '选择', image: characterImage(6), color: '#c76e72', accent: '#f2d7bf', line: '晚霞偷偷染红了脸颊', accessory: 'bow' },
+  { id: 'pond', name: '心思', image: characterImage(7), color: '#5f8581', accent: '#e7cf88', line: '风吹过池塘，也吹来想念', accessory: 'drop' },
+  { id: 'acorn', name: '玩伴', image: characterImage(8), color: '#796245', accent: '#d9a85d', line: '小小勇气，会长成一片森林', accessory: 'acorn' },
+  { id: 'starlight', name: '在日光下', image: characterImage(9), color: '#687286', accent: '#f1d992', line: '今晚的星星只负责闪耀', accessory: 'star' },
+  { id: 'petal', name: '诱饵', image: characterImage(10), color: '#d08d83', accent: '#f4e1cb', line: '花瓣记得每次温柔的靠近', accessory: 'flower' },
+  { id: 'meadow', name: '长发', image: characterImage(11), color: '#8b9a69', accent: '#e4c66c', line: '走慢一点，日光正在等你', accessory: 'daisy' },
+  { id: 'moon', name: '独处', image: characterImage(12), color: '#555b68', accent: '#e8d59d', line: '月光会替我，照亮你的归途', accessory: 'moon' },
 ]
 
 const els = {
@@ -29,7 +29,6 @@ const els = {
   revealCard: document.querySelector('#revealCard'),
   revealFront: document.querySelector('#revealFront'),
   revealKicker: document.querySelector('#revealKicker'),
-  revealSerial: document.querySelector('#revealSerial'),
   revealName: document.querySelector('#revealName'),
   revealLine: document.querySelector('#revealLine'),
   collect: document.querySelector('#collectButton'),
@@ -50,6 +49,7 @@ const els = {
 let state = loadState()
 let activeCard = null
 let revealTimer = null
+let revealFrame = null
 
 function loadState() {
   try {
@@ -117,7 +117,7 @@ function renderGrid() {
       face.className = 'mini-face'
       face.style.setProperty('--card-tint', item.color)
       face.append(makeCharacter(item, true))
-      face.insertAdjacentHTML('beforeend', `<span>${item.name.replace('日光收藏 ', 'NO.')}</span>`)
+      face.insertAdjacentHTML('beforeend', `<span>${item.name}</span>`)
       button.append(face)
     } else {
       button.innerHTML = `<div class="card-back"><span class="card-number">${String(slot + 1).padStart(2, '0')}</span><div class="card-sun"></div><strong>Z</strong><small>SUNLIGHT</small></div>`
@@ -139,6 +139,9 @@ function updateProgress() {
   } else if (count > 0) {
     els.hint.textContent = `还差 ${12 - count} 张，拼成完整的日光收藏`
     els.footer.textContent = '点按已开启的卡片，可以再次查看'
+  } else {
+    els.hint.textContent = '选一张心动的卡，迎接今日份日光'
+    els.footer.textContent = '未开启的卡片里，藏着不同的相遇'
   }
 }
 
@@ -161,22 +164,31 @@ function openCard(slot) {
   }
   activeCard = { slot, item, isNew }
   prepareReveal(activeCard)
+  els.revealCard.classList.toggle('replay', !isNew)
   els.reveal.classList.add('is-visible')
   els.reveal.setAttribute('aria-hidden', 'false')
   document.body.classList.add('modal-open')
-  els.revealCard.classList.toggle('replay', !isNew)
-  requestAnimationFrame(() => els.reveal.classList.add('is-revealing'))
+
+  // Commit the face-down state before starting the transition. Without this
+  // layout read, a reused hidden overlay can skip straight to the front face.
+  void els.revealCard.offsetWidth
+  els.reveal.classList.remove('is-resetting')
+  cancelAnimationFrame(revealFrame)
+  revealFrame = requestAnimationFrame(() => {
+    els.reveal.classList.add('is-revealing')
+    revealFrame = null
+  })
 
   clearTimeout(revealTimer)
-  const delay = matchMedia('(prefers-reduced-motion: reduce)').matches ? 80 : isNew ? 2100 : 650
+  const delay = matchMedia('(prefers-reduced-motion: reduce)').matches ? 80 : isNew ? 2100 : 1050
   revealTimer = setTimeout(() => finishReveal(activeCard), delay)
 }
 
 function prepareReveal({ item, isNew }) {
+  els.reveal.classList.add('is-resetting')
   els.revealFront.replaceChildren(makeCharacter(item))
   els.revealFront.style.setProperty('--card-tint', item.color)
   els.revealKicker.textContent = isNew ? '日光正在显影' : '再次遇见这束日光'
-  els.revealSerial.textContent = `SUNLIGHT ${item.name.slice(-2)} / 12`
   els.revealName.textContent = item.name
   els.revealLine.textContent = item.line
   els.collect.textContent = isNew ? '收入收藏册' : '返回收藏册'
@@ -195,6 +207,10 @@ function finishReveal({ item, isNew }) {
 function closeReveal() {
   if (!els.reveal.classList.contains('is-revealed')) return
   const completedNow = activeCard?.isNew && Object.keys(state.assignments).length === 12 && !state.letterSeen
+  clearTimeout(revealTimer)
+  revealTimer = null
+  cancelAnimationFrame(revealFrame)
+  revealFrame = null
   els.reveal.classList.remove('is-visible', 'is-revealing', 'is-revealed')
   els.reveal.setAttribute('aria-hidden', 'true')
   document.body.classList.remove('modal-open')
