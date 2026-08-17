@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 
-// base must match the GitHub Pages project path
 export default defineConfig({
-  base: '/hello/',
+  // GitHub Pages uses /hello/; EdgeOne serves this project at the domain root.
+  base: process.env.VITE_BASE_PATH || '/hello/',
 })
