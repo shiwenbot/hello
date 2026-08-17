@@ -2,20 +2,21 @@ import * as THREE from 'three'
 
 const STORAGE_KEY = 'zsiga-sunlight-collection-v1'
 const ASSET_BASE = import.meta.env.BASE_URL
+const characterImage = (number) => `${ASSET_BASE}assets/characters/sunlight-${String(number).padStart(2, '0')}.webp`
 
 const characters = [
-  { id: 'moss', name: '日光收藏 01', image: `${ASSET_BASE}assets/characters/sunlight-01.png`, color: '#657455', accent: '#d5b861', line: '苔藓把清晨的秘密交给了你', accessory: 'leaf' },
-  { id: 'berry', name: '日光收藏 02', image: '', color: '#b84943', accent: '#f1c8a9', line: '甜甜的心事，今天也没有迟到', accessory: 'berry' },
-  { id: 'cloud', name: '日光收藏 03', image: '', color: '#9ea8a0', accent: '#efe6cd', line: '云朵兜住了一小片温柔', accessory: 'cloud' },
-  { id: 'honey', name: '日光收藏 04', image: '', color: '#d4a845', accent: '#6b5639', line: '把金色的好运分你一半', accessory: 'sun' },
-  { id: 'fern', name: '日光收藏 05', image: '', color: '#415d4e', accent: '#b9c78f', line: '一片新叶，正朝着你生长', accessory: 'sprout' },
-  { id: 'rose', name: '日光收藏 06', image: '', color: '#c76e72', accent: '#f2d7bf', line: '晚霞偷偷染红了脸颊', accessory: 'bow' },
-  { id: 'pond', name: '日光收藏 07', image: '', color: '#5f8581', accent: '#e7cf88', line: '风吹过池塘，也吹来想念', accessory: 'drop' },
-  { id: 'acorn', name: '日光收藏 08', image: '', color: '#796245', accent: '#d9a85d', line: '小小勇气，会长成一片森林', accessory: 'acorn' },
-  { id: 'starlight', name: '日光收藏 09', image: '', color: '#687286', accent: '#f1d992', line: '今晚的星星只负责闪耀', accessory: 'star' },
-  { id: 'petal', name: '日光收藏 10', image: '', color: '#d08d83', accent: '#f4e1cb', line: '花瓣记得每次温柔的靠近', accessory: 'flower' },
-  { id: 'meadow', name: '日光收藏 11', image: '', color: '#8b9a69', accent: '#e4c66c', line: '走慢一点，日光正在等你', accessory: 'daisy' },
-  { id: 'moon', name: '日光收藏 12', image: '', color: '#555b68', accent: '#e8d59d', line: '月光会替我，照亮你的归途', accessory: 'moon' },
+  { id: 'moss', name: '日光收藏 01', image: characterImage(1), color: '#657455', accent: '#d5b861', line: '苔藓把清晨的秘密交给了你', accessory: 'leaf' },
+  { id: 'berry', name: '日光收藏 02', image: characterImage(2), color: '#b84943', accent: '#f1c8a9', line: '甜甜的心事，今天也没有迟到', accessory: 'berry' },
+  { id: 'cloud', name: '日光收藏 03', image: characterImage(3), color: '#9ea8a0', accent: '#efe6cd', line: '云朵兜住了一小片温柔', accessory: 'cloud' },
+  { id: 'honey', name: '日光收藏 04', image: characterImage(4), color: '#d4a845', accent: '#6b5639', line: '把金色的好运分你一半', accessory: 'sun' },
+  { id: 'fern', name: '日光收藏 05', image: characterImage(5), color: '#415d4e', accent: '#b9c78f', line: '一片新叶，正朝着你生长', accessory: 'sprout' },
+  { id: 'rose', name: '日光收藏 06', image: characterImage(6), color: '#c76e72', accent: '#f2d7bf', line: '晚霞偷偷染红了脸颊', accessory: 'bow' },
+  { id: 'pond', name: '日光收藏 07', image: characterImage(7), color: '#5f8581', accent: '#e7cf88', line: '风吹过池塘，也吹来想念', accessory: 'drop' },
+  { id: 'acorn', name: '日光收藏 08', image: characterImage(8), color: '#796245', accent: '#d9a85d', line: '小小勇气，会长成一片森林', accessory: 'acorn' },
+  { id: 'starlight', name: '日光收藏 09', image: characterImage(9), color: '#687286', accent: '#f1d992', line: '今晚的星星只负责闪耀', accessory: 'star' },
+  { id: 'petal', name: '日光收藏 10', image: characterImage(10), color: '#d08d83', accent: '#f4e1cb', line: '花瓣记得每次温柔的靠近', accessory: 'flower' },
+  { id: 'meadow', name: '日光收藏 11', image: characterImage(11), color: '#8b9a69', accent: '#e4c66c', line: '走慢一点，日光正在等你', accessory: 'daisy' },
+  { id: 'moon', name: '日光收藏 12', image: characterImage(12), color: '#555b68', accent: '#e8d59d', line: '月光会替我，照亮你的归途', accessory: 'moon' },
 ]
 
 const els = {
